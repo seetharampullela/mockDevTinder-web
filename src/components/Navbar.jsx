@@ -1,55 +1,76 @@
+import axios from "axios";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "../constants";
+import { Link, useNavigate } from "react-router-dom";
+import { removeUser } from "../utils/userSlice";
 
 const Navbar = () => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logout = async () => {
+    try {
+      const res = await axios.post(BASE_URL + "/logout", null, {
+        withCredentials: true,
+      });
+      console.log("🚀 ~ logout ~ res:", res);
+      if (res.status == 200) {
+        dispatch(removeUser());
+        navigate("/login");
+      }
+    } catch (err) {
+      console.err("ERROR: ", err);
+    }
+  };
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">🙍‍♂️ Mock App</a>
+        <Link to="/" className="btn btn-ghost text-xl">
+          🙍‍♂️ Mock App
+        </Link>
       </div>
-      <div className="flex gap-2">
-        <input
-          type="text"
-          placeholder="Search"
-          className="input input-bordered w-24 md:w-auto"
-        />
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            </div>
+      {user && (
+        <div className="gap-2 flex items-center">
+          <div>
+            <p>Welcome {user.firstName}!</p>
           </div>
-          <ul
-            tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a className="justify-between" href="/profile">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img alt="User Profile" src={user?.photoUrl} />
+              </div>
+            </div>
+            <ul
+              tabIndex="-1"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <Link className="justify-between" to="/profile">
+                  Profile
+                  <span className="badge">New</span>
+                </Link>
+              </li>
+              {/* <li>
+                <a>Settings</a>
+              </li> */}
+              <li>
+                <a onClick={logout}>Logout</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="flex-1 ce">
-          <input
-            type="checkbox"
-            value="light"
-            className="toggle theme-controller"
-          />
-        </div>
+      )}
+      <div className="ce">
+        <input
+          type="checkbox"
+          value="light"
+          className="toggle theme-controller"
+        />
       </div>
     </div>
   );
