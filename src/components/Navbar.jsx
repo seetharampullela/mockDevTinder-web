@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
+        <Link to={user ? "/" : "/login"} className="btn btn-ghost text-xl">
           🙍‍♂️ Mock App
         </Link>
       </div>
@@ -57,9 +57,11 @@ const Navbar = () => {
               <li>
                 <Link to="/connections">Connections</Link>
               </li>
-
               <li>
                 <Link to="/requests">Requests</Link>
+              </li>
+              <li>
+                <Link to="/premium">Premium</Link>
               </li>
 
               {/* <li>
