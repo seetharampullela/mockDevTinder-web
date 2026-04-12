@@ -6,10 +6,7 @@ import { useSelector } from "react-redux";
 export default function Premium() {
   const [isPremiumUser, setIsPremiumUser] = useState(false);
 
-  const user = useSelector((state) => {
-    console.log("🚀 ~ Premium.jsx:10 ~ Premium ~ user:", state);
-    return state.user;
-  });
+  const user = useSelector((state) => state.user);
 
   const handleCloseRazorPay = async () => {
     const { data } = await axios.get(BASE_URL + "/premium/verify", {
@@ -54,11 +51,28 @@ export default function Premium() {
   });
 
   return isPremiumUser ? (
-    <div>
-      <h1 className="text-2xl font-bold text-center mt-10">
-        You are already a premium user and have a {user.membershipType}
-        membership.
-      </h1>
+    // <div>
+    //   <h1 className="text-2xl font-bold text-center mt-10">
+    //     You are already a premium user and have a{" "}
+    //     {user.membershipType.toUpperCase()}
+    //     membership.
+    //   </h1>
+    // </div>
+    <div className="flex w-full flex-col lg:flex-row p-10">
+      <div className="card bg-base-300 rounded-box grid grow place-items-center p-3">
+        <h1 className="font-bold text-2xl">
+          You are already a premium user and have a{" "}
+          {user?.membershipType.toUpperCase()} Membership.
+        </h1>
+        {user.membershipType != "gold" && (
+          <button
+            className="btn btn-secondary m-3 "
+            onClick={async () => await handleBuyClick("upgrade")}
+          >
+            Upgrade to Gold
+          </button>
+        )}
+      </div>
     </div>
   ) : (
     <div className="flex w-full flex-col lg:flex-row p-10">
