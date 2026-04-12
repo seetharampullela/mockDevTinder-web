@@ -1,8 +1,23 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
+import { useSelector } from "react-redux";
 
 export default function Premium() {
+  const [isPremiumUser, setIsPremiumUser] = useState(false);
+
+  const user = useSelector((state) => {
+    console.log("🚀 ~ Premium.jsx:10 ~ Premium ~ user:", state);
+    return state.user;
+  });
+
+  const handleCloseRazorPay = async () => {
+    const { data } = await axios.get(BASE_URL + "/premium/verify", {
+      withCredentials: true,
+    });
+    setIsPremiumUser(data.isPremium);
+  };
+
   const handleBuyClick = async (type) => {
     const order = await axios.post(
       `${BASE_URL}/payment/create`,
@@ -28,12 +43,24 @@ export default function Premium() {
       theme: {
         color: "#3399cc",
       },
+      handler: handleCloseRazorPay,
     };
     var rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
 
-  return (
+  useEffect(() => {
+    handleCloseRazorPay();
+  });
+
+  return isPremiumUser ? (
+    <div>
+      <h1 className="text-2xl font-bold text-center mt-10">
+        You are already a premium user and have a {user.membershipType}
+        membership.
+      </h1>
+    </div>
+  ) : (
     <div className="flex w-full flex-col lg:flex-row p-10">
       <div className="card bg-base-300 rounded-box grid h-80 grow place-items-center p-3">
         <h1 className="font-bold text-2xl">Silver Membership</h1>
