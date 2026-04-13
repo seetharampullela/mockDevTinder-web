@@ -22,6 +22,7 @@ function App() {
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/connections" element={<Connections />} />
             <Route path="/requests" element={<Requests />} />
+            <Route path="/sentRequests" element={<SentRequests />} />
             <Route path="/premium" element={<Premium />} />
           </Route>
         </Routes>
