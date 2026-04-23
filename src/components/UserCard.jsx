@@ -8,11 +8,6 @@ const UserCard = ({ user }) => {
     user;
 
   const loggedinUser = useSelector((store) => store.user);
-  console.log(
-    "🚀 ~ UserCard.jsx:11 ~ UserCard ~ loggedinUser:",
-    loggedinUser,
-    _id,
-  );
   const dispatch = useDispatch();
 
   const handleSendRequest = async (status, userId) => {
@@ -37,7 +32,11 @@ const UserCard = ({ user }) => {
         <h2 className="card-title">{firstName + " " + lastName}</h2>
         {age && gender && <p>{age + ", " + gender}</p>}
         <p>{about}</p>
-        <p>Skills {skills?.join(",")}</p>
+        <div>
+          <span className="underline">Skills:</span>
+          <br />
+          <span>{skills?.join(",")}</span>
+        </div>
         {loggedinUser?.firstName !== firstName && (
           <div className="card-actions justify-center my-4">
             <button

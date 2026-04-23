@@ -12,6 +12,7 @@ const EditProfile = ({ user }) => {
   const [age, setAge] = useState(user.age || "");
   const [gender, setGender] = useState(user.gender || "");
   const [about, setAbout] = useState(user.about || "");
+  const [skills, setSkills] = useState(user.skills || "");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
@@ -98,13 +99,28 @@ const EditProfile = ({ user }) => {
                   <div className="label">
                     <span className="label-text">Gender:</span>
                   </div>
-                  <input
-                    type="text"
-                    value={gender}
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setGender(e.target.value)}
-                  />
+                  <div className="input input-bordered w-full max-w-xs">
+                    <span className="label-text">Male</span>
+                    <input
+                      type="radio"
+                      name="radio-1"
+                      className="radio"
+                      checked={gender == "Male"}
+                      value={"Male"}
+                      onChange={(e) => setGender(e.target.value)}
+                    />
+                    <span className="label-text">Female</span>
+                    <input
+                      type="radio"
+                      name="radio-1"
+                      className="radio"
+                      value={"Female"}
+                      checked={gender == "Female"}
+                      onChange={(e) => setGender(e.target.value)}
+                    />
+                  </div>
                 </label>
+
                 <label className="form-control w-full max-w-xs my-2">
                   <div className="label">
                     <span className="label-text">About:</span>
@@ -120,9 +136,8 @@ const EditProfile = ({ user }) => {
                     name="about"
                     className="textarea textarea-borderedw-full max-w-xs"
                     onChange={(e) => setAbout(e.target.value)}
-                  >
-                    {about}
-                  </textarea>
+                    value={about}
+                  />
                 </label>
               </div>
               <p className="text-red-500">{error}</p>
@@ -135,7 +150,7 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
         <UserCard
-          user={{ firstName, lastName, photoUrl, age, gender, about }}
+          user={{ firstName, lastName, photoUrl, age, gender, about, skills }}
         />
       </div>
       {showToast && (
