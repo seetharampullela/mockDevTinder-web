@@ -109,12 +109,20 @@ const EditProfile = ({ user }) => {
                   <div className="label">
                     <span className="label-text">About:</span>
                   </div>
-                  <input
+                  {/* <input
                     type="text"
                     value={about}
                     className="input input-bordered w-full max-w-xs"
                     onChange={(e) => setAbout(e.target.value)}
-                  />
+                  /> */}
+                  <textarea
+                    id="about"
+                    name="about"
+                    className="textarea textarea-borderedw-full max-w-xs"
+                    onChange={(e) => setAbout(e.target.value)}
+                  >
+                    {about}
+                  </textarea>
                 </label>
               </div>
               <p className="text-red-500">{error}</p>

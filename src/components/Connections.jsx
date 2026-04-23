@@ -40,23 +40,24 @@ const Connections = () => {
         return (
           <div
             key={_id}
-            className="flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto"
+            className="flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto justify-between"
           >
-            <div>
+            <div className="flex">
               <img
                 alt="photo"
                 className="w-20 h-20 rounded-full object-cover"
                 src={photoUrl}
               />
+              <div className="text-left mx-3">
+                <h2 className="font-bold text-xl">
+                  {firstName + " " + lastName}
+                </h2>
+                {age && gender && <p>{age + ", " + gender}</p>}
+                <p>{about}</p>
+              </div>
             </div>
-            <div className="text-left mx-4 ">
-              <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
-              </h2>
-              {age && gender && <p>{age + ", " + gender}</p>}
-              <p>{about}</p>
-            </div>
-            <Link to={"/chat/" + _id}>
+
+            <Link to={"/chat/" + _id + "/" + firstName + " " + lastName}>
               <button className="btn btn-primary">Chat</button>
             </Link>
           </div>

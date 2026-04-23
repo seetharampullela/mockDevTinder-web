@@ -3,6 +3,7 @@ import userReducer from "./userSlice";
 import feedReducer from "./feedSlice";
 import connectionReducer from "./connectionSlice";
 import requestReducer from "./requestSlice";
+import sentRequestReducer from "./sentRequestSlice";
 
 const appStore = configureStore(
   {
@@ -11,6 +12,7 @@ const appStore = configureStore(
       feed: feedReducer,
       connections: connectionReducer,
       requests: requestReducer,
+      sentRequest: sentRequestReducer,
     },
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),

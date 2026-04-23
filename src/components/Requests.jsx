@@ -10,13 +10,15 @@ const Requests = () => {
 
   const reviewRequest = async (status, _id) => {
     try {
-      const res = axios.post(
+      /* const res = */ await axios.post(
         BASE_URL + "/request/review/" + status + "/" + _id,
         {},
         { withCredentials: true },
       );
       dispatch(removeRequest(_id));
-    } catch (err) {}
+    } catch (err) {
+      throw new Error(err.message);
+    }
   };
 
   const fetchRequests = async () => {
@@ -26,7 +28,9 @@ const Requests = () => {
       });
 
       dispatch(addRequests(res.data.data));
-    } catch (err) {}
+    } catch (err) {
+      throw new Error(err.message);
+    }
   };
 
   useEffect(() => {

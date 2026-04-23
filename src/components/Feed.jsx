@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,12 +20,14 @@ const Feed = () => {
       dispatch(addFeed(res?.data));
     } catch (err) {
       //TODO: handle error
+      throw new Error(err.message);
     }
   };
 
   useEffect(() => {
     getFeed();
   }, []);
+
   if (!feed) return;
 
   if (feed.length <= 0)

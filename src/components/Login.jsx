@@ -17,10 +17,14 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(BASE_URL + `/login/${emailId}`, null, {
-        withCredentials: true,
-        headers: { password },
-      });
+      const res = await axios.post(
+        BASE_URL + `/login`,
+        { emailId: emailId, loginId: emailId },
+        {
+          withCredentials: true,
+          headers: { password },
+        },
+      );
       dispatch(addUser(res.data));
       return navigate("/");
     } catch (err) {
@@ -35,7 +39,6 @@ const Login = () => {
         { firstName, lastName, emailId, password, loginId: firstName },
         { withCredentials: true },
       );
-      console.log("res", res);
       dispatch(addUser(res.data.data));
       return navigate("/profile");
     } catch (err) {
@@ -79,7 +82,7 @@ const Login = () => {
             )}
             <label className="form-control w-full max-w-xs my-2">
               <div className="label">
-                <span className="label-text">Email ID:</span>
+                <span className="label-text">Email/Login Id</span>
               </div>
               <input
                 type="text"

@@ -3,12 +3,10 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useSelector } from "react-redux";
 
-export default function Premium() {
+const Premium = () => {
   const [isPremiumUser, setIsPremiumUser] = useState(false);
-
   const user = useSelector((state) => state.user);
-
-  const handleCloseRazorPay = async () => {
+  const verifyPremiumAccount = async () => {
     const { data } = await axios.get(BASE_URL + "/premium/verify", {
       withCredentials: true,
     });
@@ -40,31 +38,24 @@ export default function Premium() {
       theme: {
         color: "#3399cc",
       },
-      handler: handleCloseRazorPay,
+      handler: verifyPremiumAccount,
     };
     var rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
 
   useEffect(() => {
-    handleCloseRazorPay();
+    verifyPremiumAccount();
   });
 
   return isPremiumUser ? (
-    // <div>
-    //   <h1 className="text-2xl font-bold text-center mt-10">
-    //     You are already a premium user and have a{" "}
-    //     {user.membershipType.toUpperCase()}
-    //     membership.
-    //   </h1>
-    // </div>
     <div className="flex w-full flex-col lg:flex-row p-10">
       <div className="card bg-base-300 rounded-box grid grow place-items-center p-3">
         <h1 className="font-bold text-2xl">
           You are already a premium user and have a{" "}
-          {user?.membershipType.toUpperCase()} Membership.
+          {user?.membershipType?.toUpperCase()} Membership.
         </h1>
-        {user.membershipType != "gold" && (
+        {user?.membershipType != "gold" && (
           <button
             className="btn btn-secondary m-3 "
             onClick={async () => await handleBuyClick("upgrade")}
@@ -83,6 +74,7 @@ export default function Premium() {
           <li> - Blue tick</li>
           <li> - Chat with other people</li>
           <li> - 3 Months</li>
+          <li> - Mail Notifications</li>
         </ul>
         <button
           className="btn btn-secondary m-3 "
@@ -99,6 +91,7 @@ export default function Premium() {
           <li> - Blue tick</li>
           <li> - Chat with other people</li>
           <li> - 6 Months</li>
+          <li> - Mail Notifications</li>
         </ul>
         <button
           className="btn btn-primary m-3"
@@ -109,4 +102,5 @@ export default function Premium() {
       </div>
     </div>
   );
-}
+};
+export default Premium;
