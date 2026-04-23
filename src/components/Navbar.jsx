@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BASE_URL } from "../constants";
+import { BASE_URL } from "../utils/constants";
 import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "../utils/userSlice";
 
@@ -14,7 +14,6 @@ const Navbar = () => {
       const res = await axios.post(BASE_URL + "/logout", null, {
         withCredentials: true,
       });
-      console.log("🚀 ~ logout ~ res:", res);
       if (res.status == 200) {
         dispatch(removeUser());
         navigate("/login");
@@ -33,7 +32,7 @@ const Navbar = () => {
       {user && (
         <div className="gap-2 flex items-center">
           <div>
-            <p>Welcome {user.firstName}!</p>
+            <p>Welcome, {user.firstName}!</p>
           </div>
           <div className="dropdown dropdown-end">
             <div
