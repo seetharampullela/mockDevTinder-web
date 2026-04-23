@@ -30,8 +30,6 @@ function Chat() {
     }
   }, [messages?.length]);
 
-  console.log("messages", messages);
-
   const handleChatRoomEvent = (socket) => {
     /* Emitting an event while a user joins a chat window */
     socket.emit("joinChat", {
@@ -120,7 +118,6 @@ function Chat() {
           className="flex-1 border border-gray-400 p-2 mr-2 rounded"
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
-            console.log("e.key", e.key, typeof e.key);
             if (e.key === "Enter") {
               sendMessage(e.target.value);
             }
