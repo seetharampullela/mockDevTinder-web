@@ -27,6 +27,12 @@ const Body = () => {
   };
 
   useEffect(() => {
+    /* Navigating to login if cookie does not exist */
+    cookieStore.get("token").then((res) => {
+      if (res && !res.value) {
+        navigation("/login");
+      }
+    });
     fetchUser();
   }, []);
 
