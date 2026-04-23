@@ -66,7 +66,7 @@ const Navbar = () => {
 
       <div className="flex-1">
         <Link to={user ? "/" : "/login"} className="btn btn-ghost text-xl">
-          <img alt="photo" className="w-10 h-10" src={"../../public/dev.svg"} />
+          <img alt="photo" className="w-10 h-10" src={"/dev.svg"} />
           Dev Portal
           {user?.isPremium && (
             <div className="badge badge-primary gap-2">

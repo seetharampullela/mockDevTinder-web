@@ -3,8 +3,22 @@ import { BASE_URL } from "./constants";
 
 export const createSocketConnection = () => {
   if (location.hostname === "localhost") {
-    return io(BASE_URL);
+    return io(BASE_URL, {
+      auth: async (cb) => {
+        const tokenObj = await cookieStore.get("token");
+        cb({ token: tokenObj?.value });
+      },
+    });
   } else {
-    return io("/", { path: "/api/socket.io" });
+    return io(
+      "/",
+      { path: "/api/socket.io" },
+      {
+        auth: async (cb) => {
+          const tokenObj = await cookieStore.get("token");
+          cb({ token: tokenObj?.value });
+        },
+      },
+    );
   }
 };
