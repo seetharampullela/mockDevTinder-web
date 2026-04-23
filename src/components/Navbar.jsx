@@ -5,7 +5,6 @@ import { BASE_URL } from "../utils/constants";
 import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "../utils/userSlice";
 import Menu from "./Menu";
-import hero from "../assets/hero.png";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
@@ -20,7 +19,6 @@ const Navbar = () => {
         dispatch(removeUser());
         navigate("/login");
       }
-      f;
     } catch (err) {
       console.err("ERROR: ", err);
     }
