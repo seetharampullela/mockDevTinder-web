@@ -10,15 +10,12 @@ export const createSocketConnection = () => {
       },
     });
   } else {
-    return io(
-      "/",
-      { path: "/api/socket.io" },
-      {
-        auth: async (cb) => {
-          const tokenObj = await cookieStore.get("token");
-          cb({ token: tokenObj?.value });
-        },
+    return io("/", {
+      auth: async (cb) => {
+        const tokenObj = await cookieStore.get("token");
+        cb({ token: tokenObj?.value });
       },
-    );
+      path: "/api/socket.io",
+    });
   }
 };
